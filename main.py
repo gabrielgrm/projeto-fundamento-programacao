@@ -15,79 +15,94 @@ def clear():
     os.system('cls')
 def inicial():
     try:
-        print("==== Sistema de Rastreamento de Despesas Pessoais =====\n")
-        inicio = int(input("1. Login\n2. Cadastrar\n3. Sair\n\n"))
-        clear()
-        if inicio == 1:
-            logar()
-        elif inicio == 2:
-            cadastrar()
-        elif inicio == 3:
-            exit()
-        else:
-            print("Opção inválida\n")
-            inicial()
-    except ValueError:
+        while True:
+            print("==== Sistema de Rastreamento de Despesas Pessoais =====\n")
+            inicio = int(input("1. Login\n2. Cadastrar\n3. Sair\n\n"))
+            clear()
+            if inicio == 1:
+                logar()
+            elif inicio == 2:
+                cadastrar()
+            elif inicio == 3:
+                print("Saindo...")
+                sleep(1)
+                clear()
+                break
+            else:
+                clear()
+                print("Digite um número entre [1] e [3]\n")
+                sleep(1)
+                clear()
+                inicial()
+    except ValueError or KeyboardInterrupt:
         clear()
         print("Opção inválida\n")
         sleep(1)
         clear()
         inicial()
+    except EOFError:
+        clear()
+        print("Saindo da aplicação\n")
+        sleep(1)
+        clear()
+        exit()
 def logar():
-    try:
         print("Faça o login\n")
         login = input("Login: ").upper()
         password = input("Senha: ")
-        if login in usuario:
-            if password == usuario[login]:
-                print("Logado com sucesso!")
-                sleep(1)
-                qntd[login] += 1
-                clear()
-                if qntd[login] == 1:
-                    salario(login)
+        arquivo = open('usuarios.csv', 'r+')
+        for linha in arquivo:
+            if login in linha:
+                linha = linha.strip()
+                linha = linha.split(', ')
+                if login == linha[0]:
+                    if password == linha[1]:
+                        print("Logado com sucesso!")
+                        sleep(1)
+                        clear()
+                        main(login)
+                    else:
+                        print("\nSenha incorreta")
+                        sleep(1)
+                        clear()
+                        logar()
                 else:
-                    main(login)
-            else:
-                print("\nSenha incorreta")
-                sleep(1)
-                clear()
-                logar()
-        else:
-            print("\nUsuário não encontrado")
-            sleep(1)
-            clear()
-            inicial()
-    except ValueError:
-        clear()
-        print("Opção inválida\n")
-        sleep(1)
-        clear()
-        logar()
+                    print("\nUsuário não encontrado")
+                    sleep(1)
+                    clear()
+                    inicial()
+        arquivo.close()
 def cadastrar():
     try:
         print("Registre-se\n")
         regLogin = input("Login: ").strip().upper()
-        regPassword = input("Senha: ").strip()
-        regPassword2 = input("Confirmar senha: ").strip()
+        regPassword = (input("Senha: ").strip())
+        regPassword2 = (input("Confirmar senha: ").strip())
         if regPassword == regPassword2:
-            usuario[regLogin] = regPassword
             print("\nUsuário cadastrado com sucesso!")
             qntd[regLogin] = 0
+            arquivo = open('usuarios.csv', 'a')
+            arquivo.write(f'{regLogin}, {regPassword}\n')
+            arquivo.close()
             sleep(1)
             clear()
-            
-            inicial()
+            salario(regLogin)
         if regPassword != regPassword2:
             print("\nSenhas não coincidem")
             sleep(1)
             clear()
             cadastrar()
-    except ValueError:
+    except ValueError or KeyboardInterrupt:
         clear()
         print("Opção inválida\n")
         sleep(1)
         clear()
+    except EOFError:
+        clear()
+        print("Saindo da aplicação\n")
+        sleep(1)
+        clear()
+        exit()
 def salario(login):
     try:
         print("==== Configurando perfil ====\n")
@@ -100,11 +115,17 @@ def salario(login):
         elif despesas == 2:
             clear()
             main(login)
-    except ValueError:
+    except ValueError or KeyboardInterrupt:
         clear()
         print("Opção inválida\n")
         sleep(1)
         clear()
+    except EOFError:
+        clear()
+        print("Saindo da aplicação\n")
+        sleep(1)
+        clear()
+        exit()
 def despesaFixa(login):
     try:
         while True:
@@ -147,12 +168,18 @@ def despesaFixa(login):
                 sleep(1)
                 clear()
                 despesaFixa(login)
-    except ValueError:
+    except ValueError or KeyboardInterrupt:
         clear()
         print("Opção inválida\n")
         sleep(1)
         clear()
         despesaFixa(login)
+    except EOFError:
+        clear()
+        print("Saindo da aplicação\n")
+        sleep(1)
+        clear()
+        exit()
 def main(login):
     try:
         print("==== Menu ====\n")
@@ -187,13 +214,18 @@ def main(login):
             saldo -= telefones[login]
         if login in outros1:
             saldo -= outros1[login]
-        print(f"Saldo: {saldo}\n")
-    except ValueError:
+    except ValueError or KeyboardInterrupt:
         clear()
         print("Opção inválida\n")
         sleep(1)
         clear()
         main(login)
+    except EOFError:
+        clear()
+        print("Saindo da aplicação\n")
+        sleep(1)
+        clear()
+        exit()
 def adicionar(login):
     try:
         print("==== Adicionar despesa ====\n")
@@ -254,12 +286,18 @@ def adicionar(login):
             sleep(1)
             clear()
             adicionar(login)
-    except ValueError:
+    except ValueError or KeyboardInterrupt:
         clear()
         print("Opção inválida\n")
         sleep(1)
         clear()
         adicionar(login)
+    except EOFError:
+        clear()
+        print("Saindo da aplicação\n")
+        sleep(1)
+        clear()
+        exit()
 def ver(login):
     try:
         print("==== Ver despesas por categoria ====\n")
@@ -284,12 +322,18 @@ def ver(login):
         sleep(5)
         clear()
         main(login)
-    except ValueError:
+    except ValueError or KeyboardInterrupt:
         clear()
         print("Opção inválida\n")
         sleep(1)
         clear()
         ver(login)
+    except EOFError:
+        clear()
+        print("Saindo da aplicação\n")
+        sleep(1)
+        clear()
+        exit()
 def excluir(login):
     try:
         print("==== Excluir despesa ====\n")
@@ -317,11 +361,17 @@ def excluir(login):
             sleep(2)
             clear()
             main(login)
-    except ValueError:
+    except ValueError or KeyboardInterrupt:
         clear()
         print("Opção inválida\n")
         sleep(1)
         clear()
         excluir(login)
+    except EOFError:
+        clear()
+        print("Saindo da aplicação\n")
+        sleep(1)
+        clear()
+        exit()
 clear()
 inicial()
