@@ -40,7 +40,13 @@ def logar():
         print("Faça o login\n")
         login = input("Login: ").upper()
         password = input("Senha: ")
-        arquivo = open('dados.csv', 'r', encoding='utf-8')
+        try:
+            arquivo = open('dados.csv', 'r', encoding='utf-8')
+        except FileNotFoundError:
+            print("Arquivo não encontrado")
+            sleep(1)
+            clear()
+            inicial()
         for linha in arquivo:
             if login in linha:
                 linha = linha.strip()
@@ -83,7 +89,13 @@ def cadastrar():
     try:
         print("Registre-se\n")
         regLogin = input("Login: ").strip().upper()
-        arquivo = open('dados.csv', 'r', encoding='utf-8')
+        try:
+            arquivo = open('dados.csv', 'r', encoding='utf-8')
+        except FileNotFoundError:
+            print("Arquivo não encontrado")
+            sleep(1)
+            clear()
+            inicial()
         for linha in arquivo:
             if regLogin in linha:
                 print("\nUsuário já cadastrado")
@@ -122,7 +134,13 @@ def configurar(login, password):
         confirmar = input(f"Pressione [ENTER] para confirmar o salário de R${salario}")
         if confirmar == '':
             print("\nSalário confirmado!")
-            arquivo = open('dados.csv', 'a', encoding='utf-8')
+            try:
+                arquivo = open('dados.csv', 'a', encoding='utf-8')
+            except FileNotFoundError:
+                print("Arquivo não encontrado")
+                sleep(1)
+                clear()
+                inicial()
             arquivo.write(f'{login}, {password}, {salario}\n')
             arquivo.close()
             sleep(1)
@@ -192,7 +210,13 @@ def registrar(login):
         despesa = input("Digite sua despesa: ").title()
         valor = float(input(f"Qual valor da(o) {despesa}: "))
         categoria = input(f"Qual a categoria da(o) {despesa}: ").title()
-        arquivo = open('gastos.csv', 'a', encoding='utf-8')
+        try:
+            arquivo = open('gastos.csv', 'a', encoding='utf-8')
+        except FileNotFoundError:
+            print("Arquivo não encontrado")
+            sleep(1)
+            clear()
+            inicial()
         arquivo.write(f'{login}, {despesa}, {valor}, {categoria}\n')
         arquivo.close()
         print("\nDespesa registrada com sucesso!")
@@ -217,7 +241,13 @@ def ver(login):
         print(f"Olá, {login}!\n")
         print("Ver despesas\n")
         categoria_filtro = input("Filtrar por categoria [ENTER para mostrar todas as despesas]: ").title()
-        arquivo = open('gastos.csv', 'r', encoding='utf-8')
+        try:
+            arquivo = open('gastos.csv', 'r', encoding='utf-8')
+        except FileNotFoundError:
+            print("Arquivo não encontrado")
+            sleep(1)
+            clear()
+            inicial()
         for linha in arquivo:
             linha = linha.strip()
             linha = linha.split(', ')
@@ -246,14 +276,26 @@ def saldo(login):
         print("==== Sistema de Rastreamento de Despesas Pessoais =====\n")
         print(f"Olá, {login}!\n")
         print("Ver saldo\n")
-        arquivo = open('dados.csv', 'r', encoding='utf-8')
+        try:
+            arquivo = open('dados.csv', 'r', encoding='utf-8')
+        except FileNotFoundError:
+            print("Arquivo não encontrado")
+            sleep(1)
+            clear()
+            inicial()
         for linha in arquivo:
             linha = linha.strip()
             linha = linha.split(', ')
             if login == linha[0]:
                 salario = float(linha[2])
         arquivo.close()
-        arquivo = open('gastos.csv', 'r', encoding='utf-8')
+        try:
+            arquivo = open('gastos.csv', 'r', encoding='utf-8')
+        except FileNotFoundError:
+            print("Arquivo não encontrado")
+            sleep(1)
+            clear()
+            inicial()
         for linha in arquivo:
             linha = linha.strip()
             linha = linha.split(', ')
@@ -282,7 +324,13 @@ def excluir(login):
         print("==== Sistema de Rastreamento de Despesas Pessoais =====\n")
         print(f"Olá, {login}!\n")
         print("Excluir despesa\n")
-        arquivo = open('gastos.csv', 'r', encoding='utf-8')
+        try:
+            arquivo = open('gastos.csv', 'r', encoding='utf-8')
+        except FileNotFoundError:
+            print("Arquivo não encontrado")
+            sleep(1)
+            clear()
+            inicial()
         for linha in arquivo:
             linha = linha.strip()
             linha = linha.split(', ')
@@ -291,10 +339,22 @@ def excluir(login):
         arquivo.close()
         print("\n")
         despesa = input("Digite a despesa que deseja excluir: ").title()
-        arquivo = open('gastos.csv', 'r', encoding='utf-8')
+        try:
+            arquivo = open('gastos.csv', 'r', encoding='utf-8')
+        except FileNotFoundError:
+            print("Arquivo não encontrado")
+            sleep(1)
+            clear()
+            inicial()
         linhas = arquivo.readlines()
         arquivo.close()
-        arquivo = open('gastos.csv', 'w', encoding='utf-8')
+        try:
+            arquivo = open('gastos.csv', 'w', encoding='utf-8')
+        except FileNotFoundError:
+            print("Arquivo não encontrado")
+            sleep(1)
+            clear()
+            inicial()
         for linha in linhas:
             if despesa not in linha:
                 arquivo.write(linha)
