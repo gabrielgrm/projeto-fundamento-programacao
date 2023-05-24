@@ -225,13 +225,13 @@ def configurar(login, password, numero):
             print("\nSalário não confirmado")
             sleep(1)
             clear()
-            configurar(login, password)
+            configurar(login, password, numero)
     except (ValueError, KeyboardInterrupt):
         clear()
         print("Digite um número válido\n")
         sleep(1)
         clear()
-        configurar(login, password)
+        configurar(login, password, numero)
     except  EOFError:
         clear()
         print("Fechando aplicativo...")
@@ -268,7 +268,7 @@ def main(login):
         saldo(login)
     elif menu == 4:
         clear()
-        ganho(login)
+        ganhos(login)
     elif menu == 5:
         clear()
         excluir(login)
@@ -287,7 +287,7 @@ def registrar(login):
         print("==== Sistema de Rastreamento de Despesas Pessoais =====\n")
         print(f"Olá, {login}!\n")
         print("Registrar despesa\n")
-        despesa = input("Digite sua despesa: ").title()
+        despesa = input("Digite o nome da despesa: ").title()
         valor = float(input(f"Qual valor da(o) {despesa}: "))
         categoria = input(f"Qual a categoria da(o) {despesa}: ").title()
         try:
@@ -399,7 +399,7 @@ def saldo(login):
         sleep(1)
         clear()
         exit()
-def ganho(login):
+def ganhos(login):
     try:
         print("==== Sistema de Rastreamento de Despesas Pessoais =====\n")
         print(f"Olá, {login}!\n")
@@ -453,7 +453,7 @@ def ganho(login):
         print("Digite um valor válido\n")
         sleep(1)
         clear()
-        ganho(login)
+        ganhos(login)
     except EOFError:
         clear()
         print("Fechando aplicativo...")
