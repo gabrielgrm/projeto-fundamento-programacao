@@ -278,7 +278,7 @@ def main(login):
         clear()
         inicial()
     else:
-        print("Digite um número entre [1] e [5]\n")
+        print("Digite um número entre [1] e [6]\n")
         sleep(1)
         clear()
         main(login)
