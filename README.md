@@ -2,7 +2,7 @@
 Manual do Usuário - Sistema de Rastreamento de Despesas Pessoais
 
 **Para a utilização desse programa, é necessario a instalação do módulo TWILIO**, para esta rodando a aplicação de forma correta
-Utilize o comando *pip3 install twilio*
+Utilize o comando *pip3 install twilio*<br>
 Para saber mais sobre a instalação: https://www.twilio.com/pt-br/docs/libraries/python
 
 Bem-vindo ao Sistema de Rastreamento de Despesas Pessoais! Este programa permite que você registre suas despesas, visualize suas despesas registradas, verifique seu saldo e exclua despesas indesejadas. Abaixo, você encontrará um guia passo a passo sobre como usar o programa.
